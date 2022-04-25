@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  aplication_programming_interface_01:
+    image: ${DOCKER_REGISTRY-}aplicationprogramminginterface01
+    build:
+      context: .
+      dockerfile: Dockerfile

@@ -50,7 +50,7 @@ namespace Aplication_Programming_Interface_01.Controllers
                 var Saldo = value.Saldo;
                 var Cuenta = _context.Cuentas.FirstOrDefault(p => p.CuentaId == value.CuentaId);
                 var UltimoMovimiento = _context.Movimientos.Where(p => p.CuentaId == value.CuentaId).OrderByDescending(p => p.MovimientoId).FirstOrDefault();
-            try
+             try
             {
                 if (UltimoMovimiento == null )
                 {
