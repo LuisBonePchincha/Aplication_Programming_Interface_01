@@ -47,8 +47,35 @@ namespace Aplication_Programming_Interface_01.Controllers
         [HttpPost]
         public ActionResult Post([FromBody] Movimientos value)
         {
+                var Saldo = value.Saldo;
+                var Cuenta = _context.Cuentas.FirstOrDefault(p => p.CuentaId == value.CuentaId);
+                var UltimoMovimiento = _context.Movimientos.Where(p => p.CuentaId == value.CuentaId).OrderByDescending(p => p.MovimientoId).FirstOrDefault();
             try
             {
+                if (UltimoMovimiento == null )
+                {
+                    Saldo = Cuenta.SaldoInicial;
+                }
+                else
+                {
+                    Saldo = UltimoMovimiento.Saldo;
+                }
+                if (value.TipoMovimiento == "Deposito")
+                {
+                    Saldo = Saldo + value.Valor;
+                }
+                else
+                {
+                    if(Saldo >= value.Valor)
+                    {
+                        Saldo = Saldo - value.Valor;
+                    }
+                    else
+                    {
+                        return BadRequest("Saldo no disponible");
+                    }
+                }
+                value.Saldo = Saldo;
                 _context.Movimientos.Add(value);
                 _context.SaveChanges();
                 return Ok(value);
