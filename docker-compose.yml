@@ -6,3 +6,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+
+networks:
+  default:
+    external:
+        name: microservicesnet
